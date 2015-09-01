@@ -6,35 +6,102 @@ var Page = React.createClass({displayName: "Page",
 
   getInitialState: function(){
     return {name: "",
-    age:""
+    age:"",
+    friend:'',
+    loginName:"",
+    displayName:"",
+    displayAge:""
     } ;
+  },
+handleChangeloginName: function(event) {
+      //console.log('handle');
+      this.setState({
+        loginName: event.target.value
+      })
   },
 
 handleChangeName: function(event) {
-    console.log('handle');
+    //console.log('handle');
     this.setState({
       name: event.target.value
     })
   },
 handleChangeAge: function(event) {
-    console.log('handle');
+    //console.log('handle');
     this.setState({
       age: event.target.value
     })
   },
+handleChangeFriend: function(event) {
+      //console.log('handle');
+    this.setState({
+      friend: event.target.value
+    })
+  },
+
+getUserAge: function(event){
+  event.preventDefault();
+  console.log("send name being run");
+  var data = {'name' :this.state.loginName};
+  console.log('getUserAgedata:', data);
+  this.userAge(data);
+},
+
+userAge: function(user){
+    console.log('user:', user);
+    $.ajax({
+      dataType: 'json', //dataType requests json
+      contentType: 'application/json', //contentType sends json
+      type: 'POST',
+      url: '/age',
+      data: JSON.stringify(user),
+      success: function(data){
+        console.log('return age data', data);
+        this.setState ({
+          displayAge:data.age
+        });
+        console.log(this.state.displayAge);
+        this.setState({
+          displayName:data.name
+        });
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error('/age', status, err.toString());
+      }.bind(this)
+    });
+},
+
 
 addUser: function(event){
   event.preventDefault();
   console.log("this was run first");
-  console.log('name:', this.state.name,'AGE',this.state.age);
-    $.post('/user', {'name': "Ken", 'age': 34}, function(data){
-      console.log(data);
+  var data  = {'name' :this.state.name, 'age' :this.state.age, 'friend': this.state.friend};
+  console.log('data:', data);
+  this.UserSignup(data);
+  //console.log('name:', this.state.name,'age:',this.state.age);
+
+},
+
+UserSignup: function(user){
+    console.log('user:', user);
+    $.ajax({
+      //dataType: 'json', //dataType requests json
+      contentType: 'application/json', //contentType sends json
+      type: 'POST',
+      url: '/user',
+      data: JSON.stringify(user),
+      success: function(data){
+        console.log(data);
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error('/user', status, err.toString());
+      }.bind(this)
     });
 },
 
 
 render: function() {
-  console.log("renderannnnnggggg");
+  //console.log("renderannnnnggggg");
 	return (
 	      React.createElement("div", null, 
           React.createElement("form", {onSubmit: this.addUser}, 
@@ -42,8 +109,16 @@ render: function() {
               React.createElement("br", null), 
               React.createElement("input", {type: "text", age: this.state.age, defaultValue: "", placeholder: "Age", onChange: this.handleChangeAge}), 
                React.createElement("br", null), 
+               React.createElement("input", {type: "text", Friend: this.state.friend, defaultValue: "", placeholder: "Friend", onChange: this.handleChangeFriend}), 
+                React.createElement("br", null), 
               React.createElement("button", null, " Enter ")
           ), 
+          React.createElement("form", {onSubmit: this.getUserAge}, 
+              React.createElement("input", {type: "text", loginName: this.state.loginName, defaultValue: "", placeholder: "Enter Name", onChange: this.handleChangeloginName}), 
+              React.createElement("button", null, " Enter ")
+          ), 
+          React.createElement("p", null, this.state.displayName, " is ", this.state.displayAge), 
+
         "pagecomponent"
 	      )
 	    )
@@ -52,15 +127,6 @@ render: function() {
 
 module.exports = Page;
 
-
-
-
-
-
-
-
-
-
 },{"jQuery":4,"react":159}],2:[function(require,module,exports){
 var React = require('react'),
     Page = require('./components/Page');
@@ -68,15 +134,6 @@ var React = require('react'),
 
 
 React.render(React.createElement(Page, null), document.getElementById('graphql-sequelize'));
-
-
-
-
-
-
-
-
-
 
 },{"./components/Page":1,"react":159}],3:[function(require,module,exports){
 // shim for using process in browser
