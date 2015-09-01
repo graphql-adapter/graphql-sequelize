@@ -4,6 +4,7 @@ var Sequelize = require('sequelize');
 var bodyParser = require('body-parser')
 
 app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('client'));
 
 var sequelize = new Sequelize('postgres://localhost/test');
@@ -14,18 +15,18 @@ var User = sequelize.define('users', {
     type: Sequelize.STRING,
     field: 'name'
   },
-  id:{
-    type: Sequelize.INTEGER,
-    field: 'id'
-  },
+  // id:{
+  //   type: Sequelize.INTEGER,
+  //   field: 'id'
+  // },
   age: {
     type: Sequelize.STRING,
     field: 'age'
+  },
+  friend: {
+  type: Sequelize.STRING,
+  field: 'friend'
   }
-  // friends: {
-  //   type: Sequelize.STRING,
-  //   field: 'friends'
-  // }
 }, {
 freezeTableName: true
 });
@@ -46,8 +47,8 @@ freezeTableName: true
 //   });
 Friend.sync();
 User.sync();
-// User.hasMany(Friend);
-// Friend.belongsTo(User);
+User.hasMany(Friend);
+Friend.belongsTo(User);
 
 app.post('/user', function(req,res){
   console.log('body:',req.body);
@@ -57,7 +58,8 @@ app.post('/user', function(req,res){
         name : req.body.name
       },
       defaults:{
-        age: req.body.age
+        age: req.body.age,
+        friend: req.body.friend
       }
     }).spread(function(user, created){
       console.log(user.get({
@@ -66,6 +68,18 @@ app.post('/user', function(req,res){
     })
 });
 
+app.post('/age', function(req,res){
+  console.log('body:',req.body);
+  User
+    .findOne({
+      where: { name : req.body.name }
+    }).then(function(user){
+
+    console.log('user;', user);
+    res.send(user);
+
+    })
+});
 
 
 app.listen(process.env.PORT || 3000, function(err){
