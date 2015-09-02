@@ -73,22 +73,16 @@ app.post('/user', function(req,res){
 //update user age
 app.post('/updateUser', function(req, res) {
   console.log("updated", req.body);
-  User.find({
-    where: {
-      name: req.body.name
-    }
-  }).complete(function(err, data) {
-    if(err) {
-      console.log(err);
-    }
-    if(data) {
-      data.updateAttributes({
-        age: req.body.age
-      }).success(function(data1) {
-        console.log('data1:', data1);
+  User.update(
+      {age: req.body.age},
+      {where:
+      {name: req.body.name}
+      }
+      ).then(function() {
+        console.log('data1:');
       })
-    }
-  })
+
+
 });
 
 app.post('/age', function(req,res){
