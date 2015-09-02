@@ -81,9 +81,19 @@ app.post('/updateUser', function(req, res) {
       ).then(function() {
         console.log('data1:');
       })
-
-
 });
+
+//DESTROYYYYYY!!!!!!!
+ app.post('/destroyUser', function (req, res) {
+   console.log("RGHGHGH!! DESTROYINGGGG!!!", req.body)
+   User.destroy({
+    where: {
+      name: req.body.name
+    }
+  }).then(function(){
+    console.log("HUMAN. HAS. BEEN. DESTROYED. BEEPBOOPBEEP");
+  })
+ });
 
 app.post('/age', function(req,res){
   console.log('body:',req.body);
