@@ -61,10 +61,8 @@ app.post('/user', function(req,res){
     .findOrCreate({
       where: {
         name : req.body.name
-
       },
       defaults:{
-        userId: req.body.friends,
         age: req.body.age
         // friend: req.body.friend
       }
@@ -72,17 +70,37 @@ app.post('/user', function(req,res){
       console.log(user.getFriends());
     })
 });
+//update user age
+app.post('/updateUser', function(req, res) {
+  console.log("updated", req.body);
+  User.find({
+    where: {
+      name: req.body.name
+    }
+  }).complete(function(err, data) {
+    if(err) {
+      console.log(err);
+    }
+    if(data) {
+      data.updateAttributes({
+        age: req.body.age
+      }).success(function(data1) {
+        console.log('data1:', data1);
+      })
+    }
+  })
+});
 
 app.post('/age', function(req,res){
   console.log('body:',req.body);
   User
     .findOne({
-      where: { name : req.body.name }
+      where: {
+        name : req.body.name
+       }
     }).then(function(user){
-
     console.log('user;', user);
     res.send(user);
-
     })
 });
 

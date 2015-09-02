@@ -2,25 +2,19 @@ var React = require('react');
 var $ = require('jQuery');
 
 var Page = React.createClass({
-
+//establish initial state
   getInitialState: function(){
     return {name: "",
     age:"",
-    friend:'',
+    userAge: '',
+    username: '',
     loginName:"",
     displayName:"",
     displayAge:""
     } ;
   },
-handleChangeloginName: function(event) {
-      //console.log('handle');
-      this.setState({
-        loginName: event.target.value
-      })
-  },
-
+//handles intital creation of name and age
 handleChangeName: function(event) {
-    //console.log('handle');
     this.setState({
       name: event.target.value
     })
@@ -31,13 +25,58 @@ handleChangeAge: function(event) {
       age: event.target.value
     })
   },
-handleChangeFriend: function(event) {
-      //console.log('handle');
+
+//handles when you look up the name based on the age
+ handleChangeloginName: function(event) {
+        //console.log('handle');
+        this.setState({
+          loginName: event.target.value
+        })
+ },
+
+ //handles when you enter a name to change the age.
+ handleChangeUsername: function(event) {
+   this.setState({
+     username: event.target.value
+   })
+ },
+ handleChangeUserAge: function(event) {
     this.setState({
-      friends: event.target.value
+      userAge: event.target.value
     })
   },
 
+
+
+//function to add one's name and age and makes post request to database
+//sets data sent to database
+addUser: function(event){
+  event.preventDefault();
+  console.log("this was run first");
+  var data  = {'name' :this.state.name, 'age' :this.state.age};
+  console.log('data:', data);
+  this.UserSignup(data);
+  //console.log('name:', this.state.name,'age:',this.state.age);
+},
+//actual post request to database
+UserSignup: function(user){
+    console.log('user:', user);
+    $.ajax({
+      //dataType: 'json', //dataType requests json
+      contentType: 'application/json', //contentType sends json
+      type: 'POST',
+      url: '/user',
+      data: JSON.stringify(user),
+      success: function(data){
+        console.log(data);
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error('/user', status, err.toString());
+      }.bind(this)
+    });
+},
+
+//this is where we make the function to get the age based on name entered
 getUserAge: function(event){
   event.preventDefault();
   console.log("send name being run");
@@ -45,7 +84,6 @@ getUserAge: function(event){
   console.log('getUserAgedata:', data);
   this.userAge(data);
 },
-
 userAge: function(user){
     console.log('user:', user);
     $.ajax({
@@ -70,32 +108,29 @@ userAge: function(user){
     });
 },
 
+//update the age based on name entered
+ updateUserAge: function(event) {
+   event.preventDefault();
+   console.log('userage being ran');
+   var data = {'name': this.state.username, 'age': this.state.userAge};
+   console.log('data for userage update', data);
+   this.updateAge(data);
+ },
 
-addUser: function(event){
-  event.preventDefault();
-  console.log("this was run first");
-  var data  = {'name' :this.state.name, 'age' :this.state.age, 'friends': this.state.friends};
-  console.log('data:', data);
-  this.UserSignup(data);
-  //console.log('name:', this.state.name,'age:',this.state.age);
-
-},
-
-UserSignup: function(user){
-    console.log('user:', user);
-    $.ajax({
-      //dataType: 'json', //dataType requests json
-      contentType: 'application/json', //contentType sends json
-      type: 'POST',
-      url: '/user',
-      data: JSON.stringify(user),
-      success: function(data){
-        console.log(data);
-      }.bind(this),
-      error: function(xhr, status, err){
-        console.error('/user', status, err.toString());
-      }.bind(this)
-    });
+ updateAge: function(user) {
+   $.ajax({
+     //dataType: 'json', //dataType requests json
+     contentType: 'application/json', //contentType sends json
+     type: 'POST',
+     url: '/updateUser',
+     data: JSON.stringify(user),
+     success: function(data){
+       console.log(data);
+     }.bind(this),
+     error: function(xhr, status, err){
+       console.error('/updateUser', status, err.toString());
+     }.bind(this)
+   });
 },
 
 
@@ -103,20 +138,28 @@ render: function() {
   //console.log("renderannnnnggggg");
 	return (
 	      <div>
+        <h1>Create your name and age</h1>
           <form onSubmit = {this.addUser}>
               <input type = "text"  name = {this.state.name} defaultValue = "" placeholder="Enter Name" onChange = {this.handleChangeName}/>
               <br/>
               <input type = "text"  age = {this.state.age} defaultValue = "" placeholder="Age" onChange = {this.handleChangeAge}/>
                <br/>
-               <input type = "text"  Friend = {this.state.friends} defaultValue = "" placeholder="Friend" onChange = {this.handleChangeFriend}/>
-                <br/>
               <button> Enter </button>
           </form>
+          <h1>look up the age of someone</h1>
           <form onSubmit = {this.getUserAge}>
               <input type = "text"  loginName = {this.state.loginName} defaultValue = "" placeholder="Enter Name" onChange = {this.handleChangeloginName}/>
               <button> Enter </button>
           </form>
           <p>{this.state.displayName} is {this.state.displayAge}</p>
+          <h1>Update your age!</h1>
+          <form onSubmit = {this.updateUserAge}>
+          <input type = "text" username = {this.state.username} defaultValue = "" placeholder = "enter name" onChange = {this.handleChangeUsername}/>
+          <br/>
+          <input type = "text" userAge = {this.state.userAge} defaultValue = "" placeholder = "enter new age" onChange = {this.handleChangeUserAge}/>
+          <button>Change Age</button>
+          </form>
+
 
         pagecomponent
 	      </div>
