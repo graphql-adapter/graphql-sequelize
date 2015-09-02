@@ -10,7 +10,6 @@ app.use(express.static('client'));
 var sequelize = new Sequelize('postgres://localhost/test');
 
 var User = sequelize.define('users', {
-
   name: {
     type: Sequelize.STRING,
     field: 'name'
@@ -22,33 +21,39 @@ var User = sequelize.define('users', {
   age: {
     type: Sequelize.STRING,
     field: 'age'
-  },
-  friend: {
-  type: Sequelize.STRING,
-  field: 'friend'
   }
+  // friend: {
+  // type: Sequelize.STRING,
+  // field: 'friend'
+  // }
 }, {
 freezeTableName: true
 });
 
-var Friend = sequelize.define('friend', {
-  name: {
-    type: Sequelize.STRING,
-    field: 'name'
-  }
-}, {
-freezeTableName: true
-});
+// var Friend = sequelize.define('friend', {
+//   User1: {
+//     type: Sequelize.STRING,
+//     field: 'name'
+//   },
+//   User2: {
+//     type: Sequelize.STRING,
+//     field: 'name'
+//   }
+//
+// }, {
+// freezeTableName: true
+// });
 // sequelize
 //   .sync({ force: true })
 //   .then(function() {
 //     // Even if we didn't define any foreign key or something else,
 //     // Sequelize will create a table SourcesTargets.
 //   });
-Friend.sync();
+//Friend.sync();
+//User.hasMany(Friend);
+
+User.hasMany(User, {as: 'friends'});
 User.sync();
-User.hasMany(Friend);
-Friend.belongsTo(User);
 
 app.post('/user', function(req,res){
   console.log('body:',req.body);
@@ -56,15 +61,15 @@ app.post('/user', function(req,res){
     .findOrCreate({
       where: {
         name : req.body.name
+
       },
       defaults:{
-        age: req.body.age,
-        friend: req.body.friend
+        userId: req.body.friends,
+        age: req.body.age
+        // friend: req.body.friend
       }
     }).spread(function(user, created){
-      console.log(user.get({
-        plain:true
-      }));
+      console.log(user.getFriends());
     })
 });
 

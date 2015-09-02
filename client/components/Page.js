@@ -34,7 +34,7 @@ handleChangeAge: function(event) {
 handleChangeFriend: function(event) {
       //console.log('handle');
     this.setState({
-      friend: event.target.value
+      friends: event.target.value
     })
   },
 
@@ -74,7 +74,7 @@ userAge: function(user){
 addUser: function(event){
   event.preventDefault();
   console.log("this was run first");
-  var data  = {'name' :this.state.name, 'age' :this.state.age, 'friend': this.state.friend};
+  var data  = {'name' :this.state.name, 'age' :this.state.age, 'friends': this.state.friends};
   console.log('data:', data);
   this.UserSignup(data);
   //console.log('name:', this.state.name,'age:',this.state.age);
@@ -108,7 +108,7 @@ render: function() {
               <br/>
               <input type = "text"  age = {this.state.age} defaultValue = "" placeholder="Age" onChange = {this.handleChangeAge}/>
                <br/>
-               <input type = "text"  Friend = {this.state.friend} defaultValue = "" placeholder="Friend" onChange = {this.handleChangeFriend}/>
+               <input type = "text"  Friend = {this.state.friends} defaultValue = "" placeholder="Friend" onChange = {this.handleChangeFriend}/>
                 <br/>
               <button> Enter </button>
           </form>

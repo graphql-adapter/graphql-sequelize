@@ -1,0 +1,466 @@
+/q
+\q
+\d
+\d city
+\country
+\d country
+\d
+\d country language
+\d countrylanguage
+?
+\d country
+SELECT continent, population FROM country
+SELECT continent, population FROM public.country
+SELECT Europe, population, FROM public.country
+CREATE VIEW vw AS SELECT continent, population FROM public.country
+/d
+\d
+SELECT continent FROM country
+SELECT continent FROM public.country
+SELECT continent FROM public.country;
+SELECT continent FROM country
+SELECT continent FROM country;
+SELECT * FROM country WHERE region LIKE 'Europe';
+SELECT name FROM country;
+SELECT name FROM country WHERE region = "Europe";
+SELECT name FROM country WHERE region = "Eastern Europe";
+SELECT name FROM country WHERE region = 'Eastern Europe';
+SELECT name FROM country WHERE region = 'Eastern Europe' ORDER BY population;
+SELECT name FROM country WHERE region = 'Eastern Europe' ORDER BY population ASC 1;;
+ELECT name FROM country WHERE region = 'Eastern Europe' ORDER BY population ASC limit  1
+SELECT name FROM country WHERE region = 'Eastern Europe' ORDER BY population ASC LIMIT 1;
+SELECT name FROM country WHERE region = 'Eastern Europe' ORDER BY population ASC LIMIT 1;
+\q
+\d
+\d countrylanguage
+countrycode SELECT countrycode FROM country = "Maldova";
+SELECT countrycode FROM country = "Maldova";
+SELECT countrycode FROM country WHERE name = 'Maldova';
+SELECT countrycode FROM country WHERE name = 'Moldova';
+\d country
+SELECT code FROM country WHERE name = 'Moldova';
+SELECT language FROM countrycode = 'MDA';
+SELECT language WHERE countrycode = 'MDA' FROM countrylanguage;
+SELECT language FROM countrylanguage WHERE 'MDA' = countrycode;
+SELECT language FROM countrylanguage WHERE 'MDA' = countrycode AND isofficial;
+\q
+SELECT language FROM countrylanguage WHERE language = 'Romanian' and percentage >= '90';
+SELECT countrycode  FROM countrylanguage WHERE language = 'Romanian' and percentage >= '90';
+SELECT city FROM country WHERE code = 'ROM' and ORDER BY population ASC LIMIT 1;
+SELECT city FROM country WHERE code = 'ROM' and ORDER BY population;
+SELECT city FROM country WHERE code = 'ROM'
+SELECT city FROM country WHERE code = 'ROM';
+\d
+\d country
+\d city
+SELECT name FROM city WHERE countrycode = 'ROM' and ORDER BY population ASC LIMIT 1;
+SELECT name FROM city WHERE countrycode = 'ROM'
+SELECT name FROM city WHERE countrycode = 'ROM';
+SELECT name FROM city WHERE countrycode = 'ROM' ORDER BY population ASC LIMIT 1;
+npm test
+\q
+\d
+\city
+\d city
+SELECT city FROM country WHERE region 
+\d country
+SELECT city FROM countrycode = (SELECT  WHERE continent = 'South America' AND  
+/d 
+\d
+\countrylanguage
+\d countrylanguage
+\d city
+\d country
+SELECT name FROM city WHERE city LIKE 'res%';
+SELECT name FROM city WHERE name LIKE 'res%';
+S
+SELECT name from city WHERE name LIKE 'Res%';
+SELECT name FROM city WHERE name LIKE 'Res%';
+SELECT name FROM city WHERE name LIKE 'Res';
+SELECT name FROM city WHERE name BEGINS 'Res';
+SELECT name FROM city WHERE name LIKE 'Res%';
+\d
+SELECT name FROM city WHERE name LIKE 'Res%';
+\d
+q
+\q
+SELECT SELECT name FROM city WHERE name LIKE 'Res%';
+SELECT name FROM city WHERE name LIKE 'Res%';
+SELECT name FROM city WHERE name LIKE 'Res%' AND SELECT region FROM country = 'South America';
+SELECT name FROM city WHERE name LIKE 'Res%' AND SELECT region FROM country WHERE  = 'South America';
+SELECT countrycode, name FROM city WHERE name LIKE 'Res%';
+SELECT countrycode, name FROM city WHERE name LIKE 'Res%';
+Query.query5 = "SELECT countrycode, name FROM city WHERE name LIKE 'Res%' AND continent FROM country = 'South America';"
+SELECT countrycode, name FROM city WHERE name LIKE 'Res%' AND continent FROM country = 'South America';
+\d country
+/d city
+\d city
+SELECT code FROM country WHERE name = 'South America';
+SELECT code FROM country WHERE name = 'South America';
+continSELECT code FROM country WHERE continent = 'South America';
+SELECT code FROM country WHERE continent = 'South America';
+SELECT name FROM city WHERE name LIKE 'Res%'AND countrycode = (SELECT code FROM country WHERE continent = 'South America');
+SELECT countrycode, name FROM city WHERE name LIKE 'Res%' and CHARACTERS <;
+SELECT name FROM city WHERE countrycode = (SELECT code FROM country WHERE continent = 'South America') AND name LIKE 'Res%';
+SELECT name FROM city WHERE name LIKE 'Res%' AND length = 7;
+SELECT name FROM city WHERE name LIKE 'Res%' AND length(name) = 7;
+SELECT language FROM countrylanguage WHERE (SELECT code FROM country WHERE name = 'Moldova') = countrycode AND isofficial
+SELECT language FROM countrylanguage WHERE (SELECT code FROM country WHERE name = 'Moldova') = countrycode AND isofficial;
+SELECT language FROM countrylanguage WHERE (SELECT code FROM country WHERE name = 'Moldova') = countrycode AND isofficial;
+q
+\q
+SELECT countrycode FROM country language WHERE language = 'Romanian' AND percentage >= '90'
+SELECT language FROM countrylanguage WHERE (SELECT code FROM country WHERE name = 'Moldova') = countrycode AND isofficial
+SELECT language FROM countrylanguage WHERE (SELECT code FROM country WHERE name = 'Moldova') = countrycode AND isofficial;
+SELECT countrycode FROM country language WHERE language = 'Romanian' AND percentage >= '90';
+SELECT code FROM country language WHERE language = 'Romanian' AND percentage >= '90';
+\d
+\d country language
+\d countrylanguage
+SELECT countrycode FROM countrylanguage WHERE language = 'Romanian' AND percentage >= '90';
+q
+\q
+SELECT name FROM country WHERE code =(SELECT countrycode FROM countrylanguage WHERE language = 'Romanian' AND percentage >= '90');
+\q
+SELECT countrycode, percentage, name FROM country CT, countrylanguage CL WHERE CT.code = CL.countrycode AND CL.language = 'Romanian' AND CL.percentage > '90');
+SELECT countrycode, percentage, name FROM country CT, countrylanguage CL WHERE CT.code = CL.countrycode AND CL.language = 'Romanian' AND CL.percentage > '90';
+\q
+SELECT name FROM city WHERE countrycode = 'ROM' ORDER BY population ASC LIMIT 1;
+SELECT name FROM city WHERE countrycode = 'ROM' ORDER BY population ASC LIMIT 1;
+\q
+SELECT name FROM city WHERE id = (SELECT capital FROM country WHERE code = 'BRA');
+\q
+\d country
+\d city
+ 
+SELECT name FROM city WHERE population = 94,083;
+SELECT name FROM city WHERE id = (SELECT capital FROM country WHERE code = 'BRA')
+ 
+SELECT name FROM city WHERE population = 94,083;kndc
+ s/
+;2D
+ s/
+;2D
+\D
+\D
+\c
+\d
+ s/
+;2D
+SELECT name FROM city WHERE population = '91803';
+SELECT name FROM city WHERE population = '91084';
+\q
+q
+/q\q
+\d
+\q
+\d
+\d user
+\q
+\d
+\q
+\q
+\d
+\d post
+\d user
+SELECT id
+SELECT id;
+SELECT * FROM user;
+SELECT * FROM username
+SELECT * FROM username;
+SELECT username  FROM user
+SELECT * FROM username
+SELECT username from user;
+select username from user;
+SELECT username FROM user;
+SELECT * FROM user;
+SELECT title FROM post;
+\q
+SELECT title FROM post
+\d
+c
+;
+\d post
+\d user
+\q
+\d
+\d
+\d
+\d
+\d post
+\d user
+\d
+\q
+deletedb codefeed
+\d
+drop database if exists codefeed
+\q
+dropdb codefeed
+ALTER TABLE user RENAME TO users
+\d
+;
+\d
+\q
+\d
+\d users
+Select * from users
+select * from users;
+select * from users;
+\q
+\q
+\d
+SELECT * from users;
+\q
+\d
+\d users
+\d post
+select * from users
+;
+\q
+\d
+\d post
+select * from post
+;
+select title from post;
+\q
+\d
+\d post
+select * from post;
+\q
+\d
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+select * from post
+;
+\q
+select * from post
+;
+\d
+\d post
+delete from post where id = 40;
+select * from post
+;
+\d
+drop table comments
+\d
+droptable comments
+;
+drop table comments;
+\d
+select * from comment
+;
+drop table post;
+drop table post cascade;
+\d
+\d
+\d
+SELECT * from posts
+;
+select * from post;
+\d
+select * from post;
+select * from post;
+select * from post;
+\d post
+\d post
+\q
+\d
+\d post
+drop table post cascade
+\d
+drop table post cascade
+\d
+\d
+\d post
+drop table post
+\d
+DROP TABLE post
+DROP TABLE post;
+drop table post cascade;
+\d
+\d
+\d post
+drop table post cascade;
+\q
+\d
+\d post
+\d comment
+select * from post
+;
+\d
+select * from comment
+;
+\d post
+\d post
+select * from post
+;
+\q
+\db
+\d
+\users
+select users 
+\users
+select * from users
+;
+select * from users
+;
+\q
+\d
+drop db
+dropdb sample;
+drop TABLE FRiend
+;
+drop table Friend;
+drop table friends;
+drop table users;
+\d
+select * from Friend
+;
+;
+select * from Friend
+select * from Friend
+;
+SELECT * FROM Friend;
+select * from friend
+select user
+;
+Select * from user;
+\d
+select * from Users;
+\Users
+\d Users
+\db
+Users
+;
+select Users;
+select * from Users
+;
+select * from Users;
+\q
+\d
+select * from Friend;
+Select * from Users;
+Drop Friend from Table;
+droptable Friend;
+drop TABLE Friend;
+dropdb sample;
+drop db sample
+;
+drop db sample;
+drop table Friend;
+drop table friend;
+\d
+\q
+\d
+select * from friend;
+select * from user;
+select * from users;
+\q
+select * from users;
+drop table users
+;
+psql test
+\d
+\d
+drop table friend
+;
+drop table friend
+;
+test\
+d\
+db\
+\d
+\d;
+\d
+\q
+select * from users;
+drop table friend;
+\d
+select * from friend;
+drop table friend;
+\d
+select * from friend;
+drop table friend;
+select * from friend;
+drop table friend;
+drop table users;
+\d
+\d
+select * from users;
+select * from user;
+drop table users;
+drop table friend;
+\d
+select * from user;
+select * from users;
+drop table friend
+drop rtable users;
+drop table users;
+drop table friend;
+\d
+drop table friend;
+drop table users;
+\d
+select * from users;
+\d
+\d friend
+\q
+\d
+\d
+\q
+\d
+select * from users;
+\d
+\q
+\d
+\d users
+\d
+drop table users;
+\d
+/d
+\d
+\d users
+\q
+\d
+\d users
+SELECT * FROM users;
+\d
+\d
+\d users
+SELECT * FROM users;
+\q
+\d
+\d
+\d users
+\q
+\q
+\d
+\s users

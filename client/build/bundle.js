@@ -35,7 +35,7 @@ handleChangeAge: function(event) {
 handleChangeFriend: function(event) {
       //console.log('handle');
     this.setState({
-      friend: event.target.value
+      friends: event.target.value
     })
   },
 
@@ -75,7 +75,7 @@ userAge: function(user){
 addUser: function(event){
   event.preventDefault();
   console.log("this was run first");
-  var data  = {'name' :this.state.name, 'age' :this.state.age, 'friend': this.state.friend};
+  var data  = {'name' :this.state.name, 'age' :this.state.age, 'friends': this.state.friends};
   console.log('data:', data);
   this.UserSignup(data);
   //console.log('name:', this.state.name,'age:',this.state.age);
@@ -109,7 +109,7 @@ render: function() {
               React.createElement("br", null), 
               React.createElement("input", {type: "text", age: this.state.age, defaultValue: "", placeholder: "Age", onChange: this.handleChangeAge}), 
                React.createElement("br", null), 
-               React.createElement("input", {type: "text", Friend: this.state.friend, defaultValue: "", placeholder: "Friend", onChange: this.handleChangeFriend}), 
+               React.createElement("input", {type: "text", Friend: this.state.friends, defaultValue: "", placeholder: "Friend", onChange: this.handleChangeFriend}), 
                 React.createElement("br", null), 
               React.createElement("button", null, " Enter ")
           ), 
@@ -127,6 +127,8 @@ render: function() {
 
 module.exports = Page;
 
+
+
 },{"jQuery":4,"react":159}],2:[function(require,module,exports){
 var React = require('react'),
     Page = require('./components/Page');
@@ -134,6 +136,8 @@ var React = require('react'),
 
 
 React.render(React.createElement(Page, null), document.getElementById('graphql-sequelize'));
+
+
 
 },{"./components/Page":1,"react":159}],3:[function(require,module,exports){
 // shim for using process in browser
