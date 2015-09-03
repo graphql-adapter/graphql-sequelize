@@ -11,7 +11,8 @@ var Page = React.createClass({displayName: "Page",
     username: '',
     loginName:"",
     displayName:"",
-    displayAge:""
+    displayAge:"",
+    destroyName:''
     } ;
   },
 //handles intital creation of name and age
@@ -47,11 +48,17 @@ handleChangeAge: function(event) {
     })
   },
 
-
+//HANDLES WHEN YOU WANT TO OBLITERATE YOURSELF..... OR OTHERS.
+handleDestroy: function (event) {
+  this.setState({
+    destroyName: event.target.value
+  })
+},
 
 //function to add one's name and age and makes post request to database
 //sets data sent to database
 addUser: function(event){
+  console.log("add event", event.target);
   event.preventDefault();
   console.log("this was run first");
   var data  = {'name' :this.state.name, 'age' :this.state.age};
@@ -117,7 +124,6 @@ userAge: function(user){
    console.log('data for userage update', data);
    this.updateAge(data);
  },
-
  updateAge: function(user) {
    $.ajax({
      //dataType: 'json', //dataType requests json
@@ -134,44 +140,69 @@ userAge: function(user){
    });
 },
 
+//FUNCTION TO KILLLLLLLLL
+ destroyUser: function(event){
+  event.preventDefault();
+  console.log("destroying being run");
+  var data = {'name' :this.state.destroyName};
+  console.log('destroydata:', data);
+  this.destroyer(data);
+},
+ destroyer: function(user){
+ $.ajax({
+   //dataType: 'json', //dataType requests json
+   contentType: 'application/json', //contentType sends json
+   type: 'POST',
+   url: '/destroyUser',
+   data: JSON.stringify(user),
+   success: function(data){
+     console.log(data);
+   }.bind(this),
+   error: function(xhr, status, err){
+     console.error('/destroyUser', status, err.toString());
+   }.bind(this)
+ });
+ },
 
 render: function() {
   //console.log("renderannnnnggggg");
 	return (
 	      React.createElement("div", null, 
-        React.createElement("h1", null, "Create your name and age"), 
+        React.createElement("h3", null, "Create your name and age"), 
           React.createElement("form", {onSubmit: this.addUser}, 
-              React.createElement("input", {type: "text", name: this.state.name, defaultValue: "", placeholder: "Enter Name", onChange: this.handleChangeName}), 
-              React.createElement("br", null), 
-              React.createElement("input", {type: "text", age: this.state.age, defaultValue: "", placeholder: "Age", onChange: this.handleChangeAge}), 
-               React.createElement("br", null), 
-              React.createElement("button", null, " Enter ")
+            React.createElement("input", {type: "text", name: this.state.name, defaultValue: "", placeholder: "Enter Name", onChange: this.handleChangeName}), 
+            React.createElement("br", null), 
+            React.createElement("input", {type: "text", age: this.state.age, defaultValue: "", placeholder: "Age", onChange: this.handleChangeAge}), 
+            React.createElement("br", null), 
+            React.createElement("button", null, "Add User")
           ), 
-          React.createElement("h1", null, "look up the age of someone"), 
+
+          React.createElement("h3", null, "Look up the age of someone"), 
           React.createElement("form", {onSubmit: this.getUserAge}, 
-              React.createElement("input", {type: "text", loginName: this.state.loginName, defaultValue: "", placeholder: "Enter Name", onChange: this.handleChangeloginName}), 
-              React.createElement("button", null, " Enter ")
+            React.createElement("input", {type: "text", loginName: this.state.loginName, defaultValue: "", placeholder: "Enter Name", onChange: this.handleChangeloginName}), 
+            React.createElement("button", null, " Check for Age ")
           ), 
           React.createElement("p", null, this.state.displayName, " is ", this.state.displayAge), 
-          React.createElement("h1", null, "Update your age!"), 
+
+          React.createElement("h3", null, "Update your age!"), 
           React.createElement("form", {onSubmit: this.updateUserAge}, 
-          React.createElement("input", {type: "text", username: this.state.username, defaultValue: "", placeholder: "enter name", onChange: this.handleChangeUsername}), 
-          React.createElement("br", null), 
-          React.createElement("input", {type: "text", userAge: this.state.userAge, defaultValue: "", placeholder: "enter new age", onChange: this.handleChangeUserAge}), 
-          React.createElement("button", null, "Change Age")
+            React.createElement("input", {type: "text", username: this.state.username, defaultValue: "", placeholder: "enter name", onChange: this.handleChangeUsername}), 
+            React.createElement("br", null), 
+            React.createElement("input", {type: "text", userAge: this.state.userAge, defaultValue: "", placeholder: "enter new age", onChange: this.handleChangeUserAge}), 
+            React.createElement("button", null, "Change Age")
           ), 
 
-
-        "pagecomponent"
+          React.createElement("h3", null, "Eliminate a person"), 
+          React.createElement("form", {onSubmit: this.destroyUser}, 
+            React.createElement("input", {type: "text", destroyName: this.state.destroyName, defaultValue: "", placeholder: "destroy", onChange: this.handleDestroy}), 
+            React.createElement("button", null, " Destroy ")
+          )
 	      )
 	    )
   }
 });
 
 module.exports = Page;
-
-
-
 
 
 
@@ -182,9 +213,6 @@ var React = require('react'),
 
 
 React.render(React.createElement(Page, null), document.getElementById('graphql-sequelize'));
-
-
-
 
 
 

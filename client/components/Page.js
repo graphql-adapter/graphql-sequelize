@@ -10,7 +10,8 @@ var Page = React.createClass({
     username: '',
     loginName:"",
     displayName:"",
-    displayAge:""
+    displayAge:"",
+    destroyName:''
     } ;
   },
 //handles intital creation of name and age
@@ -46,11 +47,17 @@ handleChangeAge: function(event) {
     })
   },
 
-
+//HANDLES WHEN YOU WANT TO OBLITERATE YOURSELF..... OR OTHERS.
+handleDestroy: function (event) {
+  this.setState({
+    destroyName: event.target.value
+  })
+},
 
 //function to add one's name and age and makes post request to database
 //sets data sent to database
 addUser: function(event){
+  console.log("add event", event.target);
   event.preventDefault();
   console.log("this was run first");
   var data  = {'name' :this.state.name, 'age' :this.state.age};
@@ -116,7 +123,6 @@ userAge: function(user){
    console.log('data for userage update', data);
    this.updateAge(data);
  },
-
  updateAge: function(user) {
    $.ajax({
      //dataType: 'json', //dataType requests json
@@ -133,35 +139,63 @@ userAge: function(user){
    });
 },
 
+//FUNCTION TO KILLLLLLLLL
+ destroyUser: function(event){
+  event.preventDefault();
+  console.log("destroying being run");
+  var data = {'name' :this.state.destroyName};
+  console.log('destroydata:', data);
+  this.destroyer(data);
+},
+ destroyer: function(user){
+ $.ajax({
+   //dataType: 'json', //dataType requests json
+   contentType: 'application/json', //contentType sends json
+   type: 'POST',
+   url: '/destroyUser',
+   data: JSON.stringify(user),
+   success: function(data){
+     console.log(data);
+   }.bind(this),
+   error: function(xhr, status, err){
+     console.error('/destroyUser', status, err.toString());
+   }.bind(this)
+ });
+ },
 
 render: function() {
   //console.log("renderannnnnggggg");
 	return (
 	      <div>
-        <h1>Create your name and age</h1>
+        <h3>Create your name and age</h3>
           <form onSubmit = {this.addUser}>
-              <input type = "text"  name = {this.state.name} defaultValue = "" placeholder="Enter Name" onChange = {this.handleChangeName}/>
-              <br/>
-              <input type = "text"  age = {this.state.age} defaultValue = "" placeholder="Age" onChange = {this.handleChangeAge}/>
-               <br/>
-              <button> Enter </button>
+            <input type = "text"  name = {this.state.name} defaultValue = "" placeholder="Enter Name" onChange = {this.handleChangeName}/>
+            <br/>
+            <input type = "text"  age = {this.state.age} defaultValue = "" placeholder="Age" onChange = {this.handleChangeAge}/>
+            <br/>
+            <button>Add User</button>
           </form>
-          <h1>look up the age of someone</h1>
+
+          <h3>Look up the age of someone</h3>
           <form onSubmit = {this.getUserAge}>
-              <input type = "text"  loginName = {this.state.loginName} defaultValue = "" placeholder="Enter Name" onChange = {this.handleChangeloginName}/>
-              <button> Enter </button>
+            <input type = "text"  loginName = {this.state.loginName} defaultValue = "" placeholder="Enter Name" onChange = {this.handleChangeloginName}/>
+            <button> Check for Age </button>
           </form>
           <p>{this.state.displayName} is {this.state.displayAge}</p>
-          <h1>Update your age!</h1>
+
+          <h3>Update your age!</h3>
           <form onSubmit = {this.updateUserAge}>
-          <input type = "text" username = {this.state.username} defaultValue = "" placeholder = "enter name" onChange = {this.handleChangeUsername}/>
-          <br/>
-          <input type = "text" userAge = {this.state.userAge} defaultValue = "" placeholder = "enter new age" onChange = {this.handleChangeUserAge}/>
-          <button>Change Age</button>
+            <input type = "text" username = {this.state.username} defaultValue = "" placeholder = "enter name" onChange = {this.handleChangeUsername}/>
+            <br/>
+            <input type = "text" userAge = {this.state.userAge} defaultValue = "" placeholder = "enter new age" onChange = {this.handleChangeUserAge}/>
+            <button>Change Age</button>
           </form>
 
-
-        pagecomponent
+          <h3>Eliminate a person</h3>
+          <form onSubmit = {this.destroyUser}>
+            <input type = "text" destroyName = {this.state.destroyName} defaultValue = "" placeholder = "destroy" onChange = {this.handleDestroy}/>
+            <button> Destroy </button>
+          </form>
 	      </div>
 	    )
   }
