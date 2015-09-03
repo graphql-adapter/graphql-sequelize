@@ -57,6 +57,7 @@ handleDestroy: function (event) {
 //function to add one's name and age and makes post request to database
 //sets data sent to database
 addUser: function(event){
+  console.log("add event", event.target);
   event.preventDefault();
   console.log("this was run first");
   var data  = {'name' :this.state.name, 'age' :this.state.age};
