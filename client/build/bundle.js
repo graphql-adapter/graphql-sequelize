@@ -14,7 +14,9 @@ var Page = React.createClass({displayName: "Page",
     displayAge:"",
     destroyName:'',
     user1:'',
-    user2:''
+    user2:'',
+    displayFriends:'',
+    displayFriends2:''
     } ;
   },
 //handles intital creation of name and age
@@ -194,7 +196,16 @@ userAge: function(user){
    url: '/friend',
    data: JSON.stringify(user),
    success: function(data){
-     console.log(data);
+     console.log('data',data[0].name);
+     var friends = data.map(function(element){
+       return element.name + " ";
+     });
+     console.log(friends);
+     this.setState({
+       displayFriends:friends
+     });
+
+     console.log("display",this.state.displayFriends)
    }.bind(this),
    error: function(xhr, status, err){
      console.error('/friend', status, err.toString());
@@ -241,7 +252,8 @@ render: function() {
             React.createElement("input", {type: "text", user1: this.state.user1, defaultValue: "", placeholder: "username", onChange: this.handleUser1}), 
             React.createElement("input", {type: "text", user2: this.state.user2, defaultValue: "", placeholder: "friend", onChange: this.handleUser2}), 
             React.createElement("button", null, "Add Buddy")
-          )
+          ), 
+          React.createElement("p", null, this.state.displayFriends, " ")
 	      )
 	    )
   }
