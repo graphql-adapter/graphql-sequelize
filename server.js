@@ -53,37 +53,37 @@ freezeTableName: true
 //User.hasMany(Friend);
 
 User.belongsToMany(User, {as: 'friends', through: 'friendships'});
-sequelize.sync().then(function(){
+sequelize.sync().then(function(){});
 
-
+app.post('/friend', function(req,res){
+  console.log('body:',req.body);
 User.findOrCreate({
   where: {
-    name: "Ben"
+    name: req.body.user1
   },
   defaults: {
-    age: '23'
+    age: ''
   }
-}).spread(function(ben, created){
+}).spread(function(userone, created){
   User.findOrCreate({
     where: {
-      name: "Enyu"
+      name: req.body.user2
     },
     defaults: {
-      age: '23'
+      age: ''
     }
-  }).spread(function(enyu, created){
-    ben.addFriend(enyu).then(function(){
-      enyu.addFriend(ben).then(function(friends){
-        enyu.getFriends().then(function (friends){
+  }).spread(function(usertwo, created){
+    userone.addFriend(usertwo).then(function(){
+      usertwo.addFriend(userone).then(function(friends){
+        usertwo.getFriends().then(function (friends){
           console.log(friends);
         })
       });
-
     });
   })
+});
+});
 
-});
-});
 
 app.post('/user', function(req,res){
   console.log('body:',req.body);
