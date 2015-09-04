@@ -12,7 +12,9 @@ var Page = React.createClass({displayName: "Page",
     loginName:"",
     displayName:"",
     displayAge:"",
-    destroyName:''
+    destroyName:'',
+    user1:'',
+    user2:''
     } ;
   },
 //handles intital creation of name and age
@@ -54,6 +56,18 @@ handleDestroy: function (event) {
     destroyName: event.target.value
   })
 },
+
+//Handles the adding of a friend. enter in name and who you want to add as friend.
+ handleUser1: function(event) {
+   this.setState({
+     user1: event.target.value
+   })
+ },
+ handleUser2: function(event) {
+   this.setState({
+     user2: event.target.value
+   })
+ },
 
 //function to add one's name and age and makes post request to database
 //sets data sent to database
@@ -164,6 +178,30 @@ userAge: function(user){
  });
  },
 
+ //function to add data to addFriend
+ addFriend: function(event) {
+    event.preventDefault();
+    console.log('adding buddy');
+    var data = {"user1": this.state.user1, "user2": this.state.user2};
+    this.friend(data);
+  },
+ //Creates post to add friend.
+ friend: function(user){
+ $.ajax({
+   //dataType: 'json', //dataType requests json
+   contentType: 'application/json', //contentType sends json
+   type: 'POST',
+   url: '/friend',
+   data: JSON.stringify(user),
+   success: function(data){
+     console.log(data);
+   }.bind(this),
+   error: function(xhr, status, err){
+     console.error('/friend', status, err.toString());
+   }.bind(this)
+ });
+ },
+
 render: function() {
   //console.log("renderannnnnggggg");
 	return (
@@ -196,6 +234,13 @@ render: function() {
           React.createElement("form", {onSubmit: this.destroyUser}, 
             React.createElement("input", {type: "text", destroyName: this.state.destroyName, defaultValue: "", placeholder: "destroy", onChange: this.handleDestroy}), 
             React.createElement("button", null, " Destroy ")
+          ), 
+
+          React.createElement("h3", null, "Add Friend"), 
+          React.createElement("form", {onSubmit: this.addFriend}, 
+            React.createElement("input", {type: "text", user1: this.state.user1, defaultValue: "", placeholder: "username", onChange: this.handleUser1}), 
+            React.createElement("input", {type: "text", user2: this.state.user2, defaultValue: "", placeholder: "friend", onChange: this.handleUser2}), 
+            React.createElement("button", null, "Add Buddy")
           )
 	      )
 	    )
@@ -206,6 +251,13 @@ module.exports = Page;
 
 
 
+
+
+
+
+
+
+
 },{"jQuery":4,"react":159}],2:[function(require,module,exports){
 var React = require('react'),
     Page = require('./components/Page');
@@ -213,6 +265,13 @@ var React = require('react'),
 
 
 React.render(React.createElement(Page, null), document.getElementById('graphql-sequelize'));
+
+
+
+
+
+
+
 
 
 
