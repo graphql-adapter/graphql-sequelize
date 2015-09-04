@@ -1,11 +1,11 @@
 var React = require('react');
 var $ = require('jQuery');
+var UserLogin = require('./UserLogin');
 
 var Page = React.createClass({
 //establish initial state
   getInitialState: function(){
-    return {name: "",
-    age:"",
+    return {
     userAge: '',
     username: '',
     loginName:"",
@@ -13,21 +13,13 @@ var Page = React.createClass({
     displayAge:"",
     destroyName:'',
     user1:'',
-    user2:''
+    user2:'',
+    displayFriends:'',
+    displayFriends2:''
     } ;
   },
 //handles intital creation of name and age
-handleChangeName: function(event) {
-    this.setState({
-      name: event.target.value
-    })
-  },
-handleChangeAge: function(event) {
-    //console.log('handle');
-    this.setState({
-      age: event.target.value
-    })
-  },
+
 
 //handles when you look up the name based on the age
  handleChangeloginName: function(event) {
@@ -68,34 +60,7 @@ handleDestroy: function (event) {
    })
  },
 
-//function to add one's name and age and makes post request to database
-//sets data sent to database
-addUser: function(event){
-  console.log("add event", event.target);
-  event.preventDefault();
-  console.log("this was run first");
-  var data  = {'name' :this.state.name, 'age' :this.state.age};
-  console.log('data:', data);
-  this.UserSignup(data);
-  //console.log('name:', this.state.name,'age:',this.state.age);
-},
-//actual post request to database
-UserSignup: function(user){
-    console.log('user:', user);
-    $.ajax({
-      //dataType: 'json', //dataType requests json
-      contentType: 'application/json', //contentType sends json
-      type: 'POST',
-      url: '/user',
-      data: JSON.stringify(user),
-      success: function(data){
-        console.log(data);
-      }.bind(this),
-      error: function(xhr, status, err){
-        console.error('/user', status, err.toString());
-      }.bind(this)
-    });
-},
+
 
 //this is where we make the function to get the age based on name entered
 getUserAge: function(event){
@@ -193,7 +158,16 @@ userAge: function(user){
    url: '/friend',
    data: JSON.stringify(user),
    success: function(data){
-     console.log(data);
+     console.log('data',data[0].name);
+     var friends = data.map(function(element){
+       return element.name + " ";
+     });
+     console.log(friends);
+     this.setState({
+       displayFriends:friends
+     });
+
+     console.log("display",this.state.displayFriends)
    }.bind(this),
    error: function(xhr, status, err){
      console.error('/friend', status, err.toString());
@@ -205,15 +179,7 @@ render: function() {
   //console.log("renderannnnnggggg");
 	return (
 	      <div>
-        <h3>Create your name and age</h3>
-          <form onSubmit = {this.addUser}>
-            <input type = "text"  name = {this.state.name} defaultValue = "" placeholder="Enter Name" onChange = {this.handleChangeName}/>
-            <br/>
-            <input type = "text"  age = {this.state.age} defaultValue = "" placeholder="Age" onChange = {this.handleChangeAge}/>
-            <br/>
-            <button>Add User</button>
-          </form>
-
+          <UserLogin/>
           <h3>Look up the age of someone</h3>
           <form onSubmit = {this.getUserAge}>
             <input type = "text"  loginName = {this.state.loginName} defaultValue = "" placeholder="Enter Name" onChange = {this.handleChangeloginName}/>
@@ -241,6 +207,7 @@ render: function() {
             <input type = "text" user2 = {this.state.user2} defaultValue = "" placeholder = "friend" onChange = {this.handleUser2}/>
             <button>Add Buddy</button>
           </form>
+          <p>{this.state.displayFriends} </p>
 	      </div>
 	    )
   }

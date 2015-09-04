@@ -75,8 +75,8 @@ User.findOrCreate({
   }).spread(function(usertwo, created){
     userone.addFriend(usertwo).then(function(){
       usertwo.addFriend(userone).then(function(friends){
-        usertwo.getFriends().then(function (friends){
-          console.log(friends);
+        userone.getFriends().then(function (friends){
+          res.send(friends);
         })
       });
     });
