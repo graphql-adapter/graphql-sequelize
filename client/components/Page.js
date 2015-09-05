@@ -1,10 +1,10 @@
-var React = require('react');
-var $ = require('jQuery');
-var UserLogin = require('./UserLogin');
-var Lookup = require('./lookup');
-var UpdateAge = require('./updateAge');
-var Destroy = require('./destroy');
-var AddFriend = require('./addFriend');
+var React = require('react'),
+ $ = require('jQuery'),
+ UserLogin = require('./UserLogin'),
+ Lookup = require('./lookup'),
+ UpdateAge = require('./updateAge'),
+ Destroy = require('./destroy'),
+ AddFriend = require('./addFriend');
 
 var Page = React.createClass({
 
