@@ -1,13 +1,12 @@
-var React = require('react');
-var $ = require('jQuery');
+var React = require('react'),
+    $ = require('jQuery');
 
 var UserLogin = React.createClass({
-
-  getInitialState: function(){
+  getInitialState: function() {
     return {
-      name: "",
-      age:""
-    } ;
+      name: '',
+      age:''
+    };
   },
 
   handleChangeName: function(event) {
@@ -51,7 +50,6 @@ var UserLogin = React.createClass({
     },
 
     render: function() {
-      //console.log("renderannnnnggggg");
     	return (
     	      <div>
             <h3>Create your name and age</h3>
@@ -65,7 +63,6 @@ var UserLogin = React.createClass({
             </div>
       )
     },
-
 });
 
 module.exports = UserLogin;
